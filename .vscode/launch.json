@@ -1,0 +1,16 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "3R smoother",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/pysmooth/__main__.py",
+            "args": ["4 1 3 6 6 4 1 6 2 4 2", "-k", "3R"],
+            "console": "integratedTerminal"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "Miles Smith",
+  "development_status": "Development Status :: 4 - Beta",
+  "email": "mileschristiansmith@gmail.com",
+  "friendly_name": "Pysmoother",
+  "github_user": "mcsmith",
+  "license": "GPL-3.0",
+  "package_name": "pysmooth",
+  "project_name": "pysmooth",
+  "version": "0.1.0"
+}
