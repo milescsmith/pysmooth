@@ -42,6 +42,8 @@ Features
 --------
 
 * TODO
+  - Replace code C/R-style coding with more Pythonic methods
+  - Unit tests
 
 
 Requirements
@@ -53,11 +55,13 @@ Requirements
 Installation
 ------------
 
-You can install *Pysmooth* via pip_ from PyPI_:
+.. You can install *Pysmooth* via pip_ from PyPI_:
+
+You can install *Pysmooth* via pip_ from github_:
 
 .. code:: console
 
-   $ pip install pysmooth
+   $ pip install git+https://github.com/milescsmith/pysmooth
 
 
 Usage

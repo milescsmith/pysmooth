@@ -14,7 +14,7 @@ def main() -> None:
 
 
 def smooth(
-    x: List[float], kind: str, twiceit: bool, endrule: str, do_ends: bool
+    x: List[float], kind: str = "3RS3R", twiceit: bool = False, endrule: str = "Tukey", do_ends: bool = False
 ) -> Tuple[List[float], int]:
     """Tukey's smoothers, translated from the `smooth` function found in the
     R module {stats}
@@ -104,7 +104,7 @@ def smooth(
         r, _ = smooth(x=y, kind=kind, twiceit=False, endrule=endrule, do_ends=do_ends)
         y += r
 
-    return y, it
+    return y, it-1
 
 
 if __name__ == "__main__":
