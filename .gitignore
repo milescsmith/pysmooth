@@ -3,8 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
+# C extensions*.so
 
 # Distribution / packaging
 .Python
@@ -136,3 +135,5 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+src/pysmooth/debug.py
