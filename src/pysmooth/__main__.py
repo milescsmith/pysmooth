@@ -1,21 +1,33 @@
 """Command-line interface."""
-from typing import List, Tuple
+from typing import List
 
 import numpy as np
 from rich.console import Console
 
-from .smooth import sm_3, sm_3R, sm_3RS3R, sm_3RSR, sm_3RSS, sm_split3
+from . import Numeric
+from .smooth import sm_3
+from .smooth import sm_3R
+from .smooth import sm_3RS3R
+from .smooth import sm_3RSR
+from .smooth import sm_3RSS
+from .smooth import sm_split3
 
 console = Console()
 
 
 def main() -> None:
-    console.print("pysmooth: Python implementation of stats::smooth() from R")
+    console.print(
+        "[red bold]pysmooth[/red bold]: A Python implementation of stats::smooth() from R"
+    )
 
 
 def smooth(
-    x: List[float], kind: str = "3RS3R", twiceit: bool = False, endrule: str = "Tukey", do_ends: bool = False
-) -> Tuple[List[float], int]:
+    x: List[Numeric],
+    kind: str = "3RS3R",
+    twiceit: bool = False,
+    endrule: str = "Tukey",
+    do_ends: bool = False,
+) -> List[Numeric]:
     """Tukey's smoothers, translated from the `smooth` function found in the
     R module {stats}
 
@@ -55,16 +67,7 @@ def smooth(
             f"endrule must be either 'copy' or 'Tukey', but {endrule} was passed"
         )
 
-    if endrule == "copy":
-        iend = 1
-    elif endrule == "Tukey":
-        iend = 2
-    else:
-        raise RuntimeError(
-            f"endrule must be either 'copy' or 'Tukey', but {endrule} was passed"
-        )
-
-    if any(np.isnan(x)):
+    if any(np.isnan(np.array(x, dtype=np.float64))):
         raise ValueError(
             "The sequence to be smoothed contains NAs/nans. This algorithm is unable to accomodate NAs."
         )
@@ -72,40 +75,36 @@ def smooth(
     if not all([np.issubdtype(type(_), np.number) for _ in x]):
         raise ValueError("The sequence contains non-numeric values.")
 
-    if kind.startswith("3RS"):
-        iend -= 1
+    if kind.startswith("3RS") and not do_ends:
+        iend = -iend
     elif kind == "S":
         iend = int(bool(do_ends))
 
-    n = len(x)
-    y = np.zeros(n).tolist()
+    n: int = len(x)
+    y: List[Numeric] = np.zeros(n, dtype=np.float64).tolist()
     split_ends = True if iend < 0 else False
 
     if kind != "S":
-        it = 0  # /* -Wall */;
-        z = np.zeros(n).tolist()
+        z: List[Numeric] = np.zeros(n, dtype=np.float64).tolist()
+        w: List[Numeric] = np.zeros(n, dtype=np.float64).tolist()
         if kind == "3RS3R":
-            w = np.zeros(n).tolist()
-            it, x, y, z, w = sm_3RS3R(x, y, z, w, n, iend, split_ends)
+            _, x, y, z, w = sm_3RS3R(x, y, z, w, n, abs(iend), split_ends)
         elif kind == "3RSS":
-            it, x, y, z = sm_3RSS(x, y, z, n, iend, split_ends)
+            _, x, y, z = sm_3RSS(x, y, z, n, abs(iend), split_ends)
         elif kind == "3RSR":
-            w = np.zeros(n)
-            it, x, y, z, w = sm_3RSR(x, y, z, w, n, iend, split_ends)
+            _, x, y, z, w = sm_3RSR(x, y, z, w, n, abs(iend), split_ends)
         elif kind == "3R":
-            it, x, y, z = sm_3R(x, y, z, n, iend)
+            _, x, y, z = sm_3R(x, y, z, n, iend)
         elif kind == "3":
-            it, x, y = sm_3(x, y, n, iend)
+            _, x, y = sm_3(x, y, n, iend)
 
     else:
-        it, x, y = sm_split3(x, y, n, bool(iend))
+        _, x, y = sm_split3(x, y, n, bool(iend))
 
     if twiceit:
-        r, _ = smooth(x=y, kind=kind, twiceit=False, endrule=endrule, do_ends=do_ends)
+        r: List[Numeric] = smooth(
+            x=y, kind=kind, twiceit=False, endrule=endrule, do_ends=do_ends
+        )
         y += r
 
-    return y, it-1
-
-
-if __name__ == "__main__":
-    main()  # pragma: no cover
+    return y

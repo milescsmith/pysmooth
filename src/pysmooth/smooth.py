@@ -1,12 +1,15 @@
 """Tukey's (Running Median) smoother.
- 
+
 A direct as I can translation of the R and C code for stats::smooth() found
 in R 4.1.2.  A copy of the original code can be found at
 https://github.com/wch/r-source/blob/trunk/src/library/stats/src/smooth.c
 
 """
 from statistics import median
-from typing import List, Tuple
+from typing import List
+from typing import Tuple
+
+from . import Numeric
 
 
 def med3(u: float, v: float, w: float) -> float:
@@ -50,8 +53,8 @@ def imed3(u: float, v: float, w: float) -> int:
 
 
 def sm_3(
-    x: List[float], y: List[float], n: int, end_rule: int
-) -> Tuple[bool, List[float], List[float]]:
+    x: List[Numeric], y: List[Numeric], n: int, end_rule: int
+) -> Tuple[bool, List[Numeric], List[Numeric]]:
     """
     y[] := Running Median of three (x) = "3 (x[])" with "copy ends"
      ---  return chg := ( y != x ) */
@@ -74,8 +77,12 @@ def sm_3(
 
 
 def sm_do_endrule(
-    y: List[float], x: List[float], n: int, chg: bool, end_rule: int
-) -> Tuple[bool, List[float], List[float]]:
+    y: List[Numeric],
+    x: List[Numeric],
+    n: int,
+    chg: bool,
+    end_rule: int,
+) -> Tuple[bool, List[Numeric], List[Numeric]]:
     if end_rule == 0:  # "sm_NO_ENDRULE"
         pass
     elif end_rule == 1:  # "sm_COPY_ENDRULE"
@@ -93,14 +100,14 @@ def sm_do_endrule(
 
 
 def sm_3R(
-    x: List[float],
-    y: List[float],
-    z: List[float],
+    x: List[Numeric],
+    y: List[Numeric],
+    z: List[Numeric],
     n: int,
     end_rule: int,
-) -> Tuple[int, List[float], List[float], List[float]]:
+) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric]]:
 
-    chg, y, x = sm_3(x, y, n, 1)  # "sm_COPY_ENDRULE"
+    chg, x, y = sm_3(x, y, n, 1)  # "sm_COPY_ENDRULE"
     it = int(chg)
 
     while chg:
@@ -119,10 +126,7 @@ def sm_3R(
         return int(chg), x, y, z
 
 
-def sptest(x: List[float], i: int) -> bool:
-    """Split test:
-    Are we at a /-\ or \_/ location => split should be made ?
-    """
+def sptest(x: List[Numeric], i: int) -> bool:
     if x[i] != x[i + 1]:
         return False
     elif (x[i - 1] <= x[i] and x[i + 1] <= x[i + 2]) or (
@@ -134,8 +138,8 @@ def sptest(x: List[float], i: int) -> bool:
 
 
 def sm_split3(
-    x: List[float], y: List[float], n: int, do_ends: bool
-) -> Tuple[bool, List[float], List[float]]:
+    x: List[Numeric], y: List[Numeric], n: int, do_ends: bool
+) -> Tuple[bool, List[Numeric], List[Numeric]]:
 
     # y[] := S(x[])  where S() = "sm_split3"
     chg = False
@@ -178,14 +182,14 @@ def sm_split3(
 
 
 def sm_3RS3R(
-    x: List[float],
-    y: List[float],
-    z: List[float],
-    w: List[float],
+    x: List[Numeric],
+    y: List[Numeric],
+    z: List[Numeric],
+    w: List[Numeric],
     n: int,
     end_rule: int,
     split_ends: bool,
-) -> Tuple[int, List[float], List[float], List[float], List[float]]:
+) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric], List[Numeric],]:
     # y[1:n] := "3R S 3R"(x[1:n]);  z = "work";
 
     it, x, y, z = sm_3R(x, y, z, n, end_rule)
@@ -203,13 +207,13 @@ def sm_3RS3R(
 
 
 def sm_3RSS(
-    x: List[float],
-    y: List[float],
-    z: List[float],
+    x: List[Numeric],
+    y: List[Numeric],
+    z: List[Numeric],
     n: int,
     end_rule: int,
     split_ends: bool,
-) -> Tuple[int, List[float], List[float], List[float]]:
+) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric]]:
     # y[1:n] := "3RSS"(x[1:n]);  z = "work"
 
     it, x, y, z = sm_3R(x, y, z, n, end_rule)
@@ -221,14 +225,14 @@ def sm_3RSS(
 
 
 def sm_3RSR(
-    x: List[float],
-    y: List[float],
-    z: List[float],
-    w: List[float],
+    x: List[Numeric],
+    y: List[Numeric],
+    z: List[Numeric],
+    w: List[Numeric],
     n: int,
     end_rule: int,
     split_ends: bool,
-) -> Tuple[int, List[float], List[float], List[float], List[float]]:
+) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric], List[Numeric],]:
 
     # y[1:n] := "3RSR"(x[1:n]);  z := residuals; w = "work";
 
