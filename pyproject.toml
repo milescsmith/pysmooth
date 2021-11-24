@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysmooth"
-version = "0.1.0"
+version = "1.0.0"
 description = "Pysmooth"
 authors = ["Miles Smith <mileschristiansmith@gmail.com>"]
 license = "GPL-3.0"

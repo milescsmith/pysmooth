@@ -104,7 +104,7 @@ def precommit(session: Session) -> None:
         activate_virtualenv_in_precommit_hooks(session)
 
 
-@session(python="3.10")
+@session(python="3.9")
 def safety(session: Session) -> None:
     """Scan dependencies for insecure packages."""
     requirements = session.poetry.export_requirements()
@@ -140,12 +140,14 @@ def coverage(session: Session) -> None:
     """Produce the coverage report."""
     args = session.posargs or ["report"]
 
-    session.install("coverage[toml]")
+    session.install("coverage[toml]", "codecov")
 
     if not session.posargs and any(Path().glob(".coverage.*")):
         session.run("coverage", "combine")
 
-    session.run("coverage", *args)
+    session.run("coverage", "xml", "--fail-under=0")
+    session.run("codecov", *session.posargs)
+    # session.run("coverage", *args)
 
 
 @session(python=python_versions)
