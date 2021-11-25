@@ -59,6 +59,16 @@ def test_hypo_3_int(x: List[Numeric]) -> None:
 
 
 @settings(deadline=None)
+@given(x=st.lists(elements=st.integers(), min_size=2, max_size=2))
+def test_hypo_3_2(x: List[Numeric]) -> None:
+    smooth(x=x, kind="3", twiceit=False, endrule="Tukey")
+    smooth(x=x, kind="3", twiceit=False, endrule="copy")
+
+    smooth(x=x, kind="3", twiceit=True, endrule="Tukey")
+    smooth(x=x, kind="3", twiceit=True, endrule="copy")
+
+
+@settings(deadline=None)
 @given(x=st.lists(elements=st.integers(), min_size=3))
 def test_hypo_S_int(x: List[Numeric]) -> None:
     smooth(x=x, kind="S", twiceit=False, endrule="Tukey")
