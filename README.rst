@@ -42,7 +42,7 @@ Features
 --------
 
 * TODO
-  - Replace code C/R-style coding with more Pythonic methods
+  - Replace C/R-style coding with more Pythonic methods
 
 
 Requirements
@@ -54,7 +54,7 @@ Requirements
 Installation
 ------------
 
-You can install *Pysmooth* via pip_ from PyPI_:
+You can install *pysmooth* via pip_ from PyPI_:
 
 .. code:: console
 
