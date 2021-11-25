@@ -24,11 +24,11 @@ A Python implementation of R's stats::smooth() Tukey's (running median) smoother
 .. |Read the Docs| image:: https://img.shields.io/readthedocs/pysmooth/latest.svg?label=Read%20the%20Docs
    :target: https://pysmooth.readthedocs.io/
    :alt: Read the documentation at https://pysmooth.readthedocs.io/
-.. |Tests| image:: https://github.com/mcsmith/pysmooth/workflows/Tests/badge.svg
-   :target: https://github.com/mcsmith/pysmooth/actions?workflow=Tests
+.. |Tests| image:: https://github.com/milescsmith/pysmooth/workflows/Tests/badge.svg
+   :target: https://github.com/milescsmith/pysmooth/actions?workflow=Tests
    :alt: Tests
-.. |Codecov| image:: https://codecov.io/gh/mcsmith/pysmooth/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/mcsmith/pysmooth
+.. |Codecov| image:: https://codecov.io/gh/milescsmith/pysmooth/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/milescsmith/pysmooth
    :alt: Codecov
 .. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
@@ -98,7 +98,7 @@ This project was generated from `@cjolowicz`_'s `Hypermodern Python Cookiecutter
 .. _GPL 3.0 license: https://opensource.org/licenses/GPL-3.0
 .. _PyPI: https://pypi.org/
 .. _Hypermodern Python Cookiecutter: https://github.com/cjolowicz/cookiecutter-hypermodern-python
-.. _file an issue: https://github.com/mcsmith/pysmooth/issues
+.. _file an issue: https://github.com/milescsmith/pysmooth/issues
 .. _pip: https://pip.pypa.io/
 .. github-only
 .. _Contributor Guide: CONTRIBUTING.rst
