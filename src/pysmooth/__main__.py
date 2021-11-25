@@ -2,7 +2,6 @@
 from typing import List
 
 import numpy as np
-from rich.console import Console
 
 from . import Numeric
 from .smooth import sm_3
@@ -11,14 +10,6 @@ from .smooth import sm_3RS3R
 from .smooth import sm_3RSR
 from .smooth import sm_3RSS
 from .smooth import sm_split3
-
-console = Console()
-
-
-def main() -> None:
-    console.print(
-        "[red bold]pysmooth[/red bold]: A Python implementation of stats::smooth() from R"
-    )
 
 
 def smooth(

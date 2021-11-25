@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysmooth"
-version = "1.0.0"
+version = "1.1.0"
 description = "Pysmooth: a Python implementation of R's stats::smooth Tukey's (running median) smoother"
 authors = ["Miles Smith <mileschristiansmith@gmail.com>"]
 license = "GPL-3.0"
@@ -17,14 +17,11 @@ Changelog = "https://github.com/milescsmith/pysmooth/releases"
 
 [tool.poetry.dependencies]
 python = "^3.8,<=3.10"
-click = "^8.0.1"
 numpy = "^1.21.4"
-typer = "^0.4.0"
-rich = "^10.14.0"
-hypothesis = "^6.27.1"
-nox-poetry = "^0.9.0"
 
 [tool.poetry.dev-dependencies]
+hypothesis = "^6.27.1"
+nox-poetry = "^0.9.0"
 pytest = "^6.2.5"
 coverage = {extras = ["toml"], version = "^6.1"}
 safety = "^1.10.3"
