@@ -5,15 +5,15 @@ description = "Pysmooth: a Python implementation of R's stats::smooth Tukey's (r
 authors = ["Miles Smith <mileschristiansmith@gmail.com>"]
 license = "GPL-3.0"
 readme = "README.rst"
-homepage = "https://github.com/mcsmith/pysmooth"
-repository = "https://github.com/mcsmith/pysmooth"
+homepage = "https://github.com/milescsmith/pysmooth"
+repository = "https://github.com/milescsmith/pysmooth"
 documentation = "https://pysmooth.readthedocs.io"
 classifiers = [
     "Development Status :: 4 - Beta",
 ]
 
 [tool.poetry.urls]
-Changelog = "https://github.com/mcsmith/pysmooth/releases"
+Changelog = "https://github.com/milescsmith/pysmooth/releases"
 
 [tool.poetry.dependencies]
 python = "^3.8,<=3.10"
@@ -49,9 +49,6 @@ sphinx-click = "^3.0.2"
 Pygments = "^2.10.0"
 ipython = "^7.29.0"
 isort = "^5.10.1"
-
-[tool.poetry.scripts]
-pysmooth = "pysmooth.__main__:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
