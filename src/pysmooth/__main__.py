@@ -1,16 +1,19 @@
 """Command-line interface."""
-from typing import List
+from typing import List, Union
 
 import numpy as np
 
-from . import Numeric
-from .smooth import sm_3
-from .smooth import sm_3R
-from .smooth import sm_3RS3R
-from .smooth import sm_3RSR
-from .smooth import sm_3RSS
-from .smooth import sm_split3
+from typing import Union
 
+from ._smooth import sm_3
+from ._smooth import sm_3R
+from ._smooth import sm_3RS3R
+from ._smooth import sm_3RSR
+from ._smooth import sm_3RSS
+from ._smooth import sm_split3
+
+
+Numeric = Union[int, float]
 
 def smooth(
     x: List[Numeric],

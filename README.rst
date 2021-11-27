@@ -48,7 +48,8 @@ Features
 Requirements
 ------------
 
-* TODO
+* Python 3.8, 3.9, or 3.10
+* Numpy 1.20
 
 
 Installation
@@ -64,7 +65,13 @@ You can install *pysmooth* via pip_ from PyPI_:
 Usage
 -----
 
-Please see the `Command-line Reference <Usage_>`_ for details.
+Pysmooth is intended to be used within another module.
+
+.. code:: console
+
+   from pysmooth import smooth
+
+   smooth(x=arr, kind="3RS3R", twiceit=False, endrule="Tukey")
 
 
 Contributing

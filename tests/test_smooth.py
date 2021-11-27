@@ -1,12 +1,15 @@
 from typing import Any
 from typing import List
+from typing import Union
 
 import numpy as np
 import pytest
 
 from pysmooth import Numeric
-from pysmooth.__main__ import smooth
+from pysmooth import smooth
 
+
+Numeric = Union[int, float]
 
 @pytest.fixture
 def test_arr() -> List[Numeric]:

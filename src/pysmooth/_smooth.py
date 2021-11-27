@@ -8,8 +8,9 @@ https://github.com/wch/r-source/blob/trunk/src/library/stats/src/smooth.c
 from statistics import median
 from typing import List
 from typing import Tuple
+from typing import Union
 
-from . import Numeric
+Numeric = Union[int, float]
 
 
 def med3(u: float, v: float, w: float) -> float:
