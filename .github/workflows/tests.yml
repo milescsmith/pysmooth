@@ -141,7 +141,5 @@ jobs:
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v2.1.0
-        run: |
-          codecov
         env: # Or as an environment variable
           super_secret: ${{ secrets.CODECOV_TOKEN }}
