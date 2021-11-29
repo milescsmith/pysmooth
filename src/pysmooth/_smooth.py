@@ -6,19 +6,16 @@ https://github.com/wch/r-source/blob/trunk/src/library/stats/src/smooth.c
 
 """
 from statistics import median
-from typing import List
-from typing import Tuple
-from typing import Union
-
-Numeric = Union[int, float]
+from typing import List, Tuple
 
 
 def med3(u: float, v: float, w: float) -> float:
-    """Find the median of three numbers
+    """Find the median of three numbers.
 
     Parameters
     ----------
     u, v, w : float
+        The three numbers to find the median of.
 
     Returns
     -------
@@ -34,11 +31,12 @@ def med3(u: float, v: float, w: float) -> float:
 
 
 def imed3(u: float, v: float, w: float) -> int:
-    """Find the index of the median of three numbers
+    """Find the index of the median of three numbers.
 
     Parameters
     ----------
     u, v, w : float
+        The three numbers to find the index of the median of.
 
     Returns
     -------
@@ -54,12 +52,9 @@ def imed3(u: float, v: float, w: float) -> int:
 
 
 def sm_3(
-    x: List[Numeric], y: List[Numeric], n: int, end_rule: int
-) -> Tuple[bool, List[Numeric], List[Numeric]]:
-    """
-    y[] := Running Median of three (x) = "3 (x[])" with "copy ends"
-     ---  return chg := ( y != x ) */
-    """
+    x: List[float], y: List[float], n: int, end_rule: int
+) -> Tuple[bool, List[float], List[float]]:
+
     chg = False
 
     if n <= 2:
@@ -78,12 +73,12 @@ def sm_3(
 
 
 def sm_do_endrule(
-    y: List[Numeric],
-    x: List[Numeric],
+    y: List[float],
+    x: List[float],
     n: int,
     chg: bool,
     end_rule: int,
-) -> Tuple[bool, List[Numeric], List[Numeric]]:
+) -> Tuple[bool, List[float], List[float]]:
     if end_rule == 0:  # "sm_NO_ENDRULE"
         pass
     elif end_rule == 1:  # "sm_COPY_ENDRULE"
@@ -101,12 +96,12 @@ def sm_do_endrule(
 
 
 def sm_3R(
-    x: List[Numeric],
-    y: List[Numeric],
-    z: List[Numeric],
+    x: List[float],
+    y: List[float],
+    z: List[float],
     n: int,
     end_rule: int,
-) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric]]:
+) -> Tuple[int, List[float], List[float], List[float]]:
 
     chg, x, y = sm_3(x, y, n, 1)  # "sm_COPY_ENDRULE"
     it = int(chg)
@@ -127,7 +122,7 @@ def sm_3R(
         return int(chg), x, y, z
 
 
-def sptest(x: List[Numeric], i: int) -> bool:
+def sptest(x: List[float], i: int) -> bool:
     if x[i] != x[i + 1]:
         return False
     elif (x[i - 1] <= x[i] and x[i + 1] <= x[i + 2]) or (
@@ -139,8 +134,8 @@ def sptest(x: List[Numeric], i: int) -> bool:
 
 
 def sm_split3(
-    x: List[Numeric], y: List[Numeric], n: int, do_ends: bool
-) -> Tuple[bool, List[Numeric], List[Numeric]]:
+    x: List[float], y: List[float], n: int, do_ends: bool
+) -> Tuple[bool, List[float], List[float]]:
 
     # y[] := S(x[])  where S() = "sm_split3"
     chg = False
@@ -183,14 +178,14 @@ def sm_split3(
 
 
 def sm_3RS3R(
-    x: List[Numeric],
-    y: List[Numeric],
-    z: List[Numeric],
-    w: List[Numeric],
+    x: List[float],
+    y: List[float],
+    z: List[float],
+    w: List[float],
     n: int,
     end_rule: int,
     split_ends: bool,
-) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric], List[Numeric],]:
+) -> Tuple[int, List[float], List[float], List[float], List[float]]:
     # y[1:n] := "3R S 3R"(x[1:n]);  z = "work";
 
     it, x, y, z = sm_3R(x, y, z, n, end_rule)
@@ -208,13 +203,13 @@ def sm_3RS3R(
 
 
 def sm_3RSS(
-    x: List[Numeric],
-    y: List[Numeric],
-    z: List[Numeric],
+    x: List[float],
+    y: List[float],
+    z: List[float],
     n: int,
     end_rule: int,
     split_ends: bool,
-) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric]]:
+) -> Tuple[int, List[float], List[float], List[float]]:
     # y[1:n] := "3RSS"(x[1:n]);  z = "work"
 
     it, x, y, z = sm_3R(x, y, z, n, end_rule)
@@ -226,14 +221,14 @@ def sm_3RSS(
 
 
 def sm_3RSR(
-    x: List[Numeric],
-    y: List[Numeric],
-    z: List[Numeric],
-    w: List[Numeric],
+    x: List[float],
+    y: List[float],
+    z: List[float],
+    w: List[float],
     n: int,
     end_rule: int,
     split_ends: bool,
-) -> Tuple[int, List[Numeric], List[Numeric], List[Numeric], List[Numeric],]:
+) -> Tuple[int, List[float], List[float], List[float], List[float]]:
 
     # y[1:n] := "3RSR"(x[1:n]);  z := residuals; w = "work";
 

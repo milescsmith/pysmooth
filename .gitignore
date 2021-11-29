@@ -136,4 +136,4 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-src/pysmooth/debug.py
+debug.py

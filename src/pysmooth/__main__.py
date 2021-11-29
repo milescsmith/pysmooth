@@ -1,29 +1,19 @@
 """Command-line interface."""
-from typing import List, Union
+from typing import List
 
 import numpy as np
 
-from typing import Union
+from ._smooth import sm_3, sm_3R, sm_3RS3R, sm_3RSR, sm_3RSS, sm_split3
 
-from ._smooth import sm_3
-from ._smooth import sm_3R
-from ._smooth import sm_3RS3R
-from ._smooth import sm_3RSR
-from ._smooth import sm_3RSS
-from ._smooth import sm_split3
-
-
-Numeric = Union[int, float]
 
 def smooth(
-    x: List[Numeric],
+    x: List[float],
     kind: str = "3RS3R",
     twiceit: bool = False,
     endrule: str = "Tukey",
     do_ends: bool = False,
-) -> List[Numeric]:
-    """Tukey's smoothers, translated from the `smooth` function found in the
-    R module {stats}
+) -> List[float]:
+    """Tukey's smoothers, translated from the `smooth` function found in the R module {stats}.
 
     Parameters
     ----------
@@ -63,11 +53,12 @@ def smooth(
 
     if any(np.isnan(np.array(x, dtype=np.float64))):
         raise ValueError(
-            "The sequence to be smoothed contains NAs/nans. This algorithm is unable to accomodate NAs."
+            "The sequence to be smoothed contains NAs/nans. This algorithm "
+            "is unable to accomodate NAs."
         )
 
     if not all([np.issubdtype(type(_), np.number) for _ in x]):
-        raise ValueError("The sequence contains non-numeric values.")
+        raise ValueError("The sequence contains non-float values.")
 
     if kind.startswith("3RS") and not do_ends:
         iend = -iend
@@ -75,12 +66,12 @@ def smooth(
         iend = int(bool(do_ends))
 
     n: int = len(x)
-    y: List[Numeric] = np.zeros(n, dtype=np.float64).tolist()
+    y: List[float] = np.zeros(n, dtype=np.float64).tolist()
     split_ends = True if iend < 0 else False
 
     if kind != "S":
-        z: List[Numeric] = np.zeros(n, dtype=np.float64).tolist()
-        w: List[Numeric] = np.zeros(n, dtype=np.float64).tolist()
+        z: List[float] = np.zeros(n, dtype=np.float64).tolist()
+        w: List[float] = np.zeros(n, dtype=np.float64).tolist()
         if kind == "3RS3R":
             _, x, y, z, w = sm_3RS3R(x, y, z, w, n, abs(iend), split_ends)
         elif kind == "3RSS":
@@ -96,7 +87,7 @@ def smooth(
         _, x, y = sm_split3(x, y, n, bool(iend))
 
     if twiceit:
-        r: List[Numeric] = smooth(
+        r: List[float] = smooth(
             x=y, kind=kind, twiceit=False, endrule=endrule, do_ends=do_ends
         )
         y += r

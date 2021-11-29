@@ -31,6 +31,27 @@ nox.options.sessions = (
     "docs-build",
 )
 
+locations = (
+    "src",
+    "tests",
+)
+
+
+@session(python=["3.10"])
+def isort(session: Session) -> None:
+    """Run black code formatter."""
+    args = session.posargs or locations
+    session.install("isort")
+    session.run("isort", *args)
+
+
+@session(python=["3.10"])
+def black(session: Session) -> None:
+    """Run black code formatter."""
+    args = session.posargs or locations
+    session.install("black[jupyter]")
+    session.run("black", *args)
+
 
 def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
     """Activate virtualenv in hooks installed by pre-commit.
@@ -87,7 +108,6 @@ def precommit(session: Session) -> None:
     """Lint using pre-commit."""
     args = session.posargs or ["run", "--all-files", "--show-diff-on-failure"]
     session.install(
-        "black",
         "darglint",
         "flake8",
         "flake8-bandit",
@@ -115,12 +135,18 @@ def safety(session: Session) -> None:
 @session(python=python_versions)
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
-    args = session.posargs or ["src", "tests", "docs/conf.py"]
+    args = session.posargs or locations
     session.install(".")
     session.install("mypy", "pytest")
-    session.run("mypy", *args)
+    session.run("mypy", "--install-types", "--non-interactive", "out", *args)
     if not session.posargs:
-        session.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")
+        session.run(
+            "mypy",
+            "--install-types",
+            "--non-interactive",
+            f"--python-executable={sys.executable}",
+            "noxfile.py",
+        )
 
 
 @session(python=python_versions)
@@ -138,7 +164,7 @@ def tests(session: Session) -> None:
 @session
 def coverage(session: Session) -> None:
     """Produce the coverage report."""
-    args = session.posargs or ["report"]
+    # args = session.posargs or ["report"]
 
     session.install("coverage[toml]", "codecov")
 

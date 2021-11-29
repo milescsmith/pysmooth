@@ -1,18 +1,13 @@
-from typing import Any
-from typing import List
-from typing import Union
+from typing import Any, List
 
 import numpy as np
 import pytest
 
-from pysmooth import Numeric
 from pysmooth import smooth
 
 
-Numeric = Union[int, float]
-
 @pytest.fixture
-def test_arr() -> List[Numeric]:
+def test_arr() -> List[float]:
     return [
         25,
         7,
@@ -68,7 +63,7 @@ def test_arr() -> List[Numeric]:
 
 
 @pytest.fixture
-def expected_3RS3R() -> List[Numeric]:
+def expected_3RS3R() -> List[float]:
     return [
         10,
         10,
@@ -123,14 +118,14 @@ def expected_3RS3R() -> List[Numeric]:
     ]
 
 
-def test_3RS3R(test_arr: List[Numeric], expected_3RS3R: List[Numeric]) -> None:
+def test_3RS3R(test_arr: List[float], expected_3RS3R: List[float]) -> None:
     results = smooth(x=test_arr, kind="3RS3R", twiceit=False, endrule="Tukey")
 
     assert results == expected_3RS3R
 
 
 @pytest.fixture
-def expected_3RSS() -> List[Numeric]:
+def expected_3RSS() -> List[float]:
     return [
         10,
         10,
@@ -185,14 +180,14 @@ def expected_3RSS() -> List[Numeric]:
     ]
 
 
-def test_3RSS(test_arr: List[Numeric], expected_3RSS: List[Numeric]) -> None:
+def test_3RSS(test_arr: List[float], expected_3RSS: List[float]) -> None:
     results = smooth(x=test_arr, kind="3RSS", twiceit=False, endrule="Tukey")
 
     assert results == expected_3RSS
 
 
 @pytest.fixture
-def expected_3RSR() -> List[Numeric]:
+def expected_3RSR() -> List[float]:
     return [
         10,
         10,
@@ -247,14 +242,14 @@ def expected_3RSR() -> List[Numeric]:
     ]
 
 
-def test_3RSR(test_arr: List[Numeric], expected_3RSR: List[Numeric]) -> None:
+def test_3RSR(test_arr: List[float], expected_3RSR: List[float]) -> None:
     results = smooth(x=test_arr, kind="3RSR", twiceit=False, endrule="Tukey")
 
     assert results == expected_3RSR
 
 
 @pytest.fixture
-def expected_3R() -> List[Numeric]:
+def expected_3R() -> List[float]:
     return [
         10,
         10,
@@ -309,14 +304,14 @@ def expected_3R() -> List[Numeric]:
     ]
 
 
-def test_3R(test_arr: List[Numeric], expected_3R: List[Numeric]) -> None:
+def test_3R(test_arr: List[float], expected_3R: List[float]) -> None:
     results = smooth(x=test_arr, kind="3R", twiceit=False, endrule="Tukey")
 
     assert results == expected_3R
 
 
 @pytest.fixture
-def expected_3() -> List[Numeric]:
+def expected_3() -> List[float]:
     return [
         14,
         10,
@@ -371,14 +366,14 @@ def expected_3() -> List[Numeric]:
     ]
 
 
-def test_3(test_arr: List[Numeric], expected_3: List[Numeric]) -> None:
+def test_3(test_arr: List[float], expected_3: List[float]) -> None:
     results = smooth(x=test_arr, kind="3", twiceit=False, endrule="Tukey")
 
     assert results == expected_3
 
 
 @pytest.fixture
-def expected_S() -> List[Numeric]:
+def expected_S() -> List[float]:
     return [
         25,
         7,
@@ -433,7 +428,7 @@ def expected_S() -> List[Numeric]:
     ]
 
 
-def test_S(test_arr: List[Numeric], expected_S: List[Numeric]) -> None:
+def test_S(test_arr: List[float], expected_S: List[float]) -> None:
     results = smooth(x=test_arr, kind="S", twiceit=False, endrule="Tukey")
 
     assert results == expected_S
@@ -450,7 +445,7 @@ def test_bad_endrule(test_arr: List[Any]) -> None:
 
 
 @pytest.fixture
-def test_arr_with_nas() -> List[Numeric]:
+def test_arr_with_nas() -> List[float]:
     return [
         25,
         7,
@@ -505,7 +500,7 @@ def test_arr_with_nas() -> List[Numeric]:
     ]
 
 
-def test_nan(test_arr_with_nas: List[Numeric]) -> None:
+def test_nan(test_arr_with_nas: List[float]) -> None:
     with pytest.raises(ValueError):
         smooth(x=test_arr_with_nas, kind="3RS3R", twiceit=False, endrule="Tukey")
 
@@ -522,4 +517,9 @@ def test_nan(test_arr_with_nas: List[Numeric]) -> None:
 # def test_nonnumbers(test_arr_with_nonnumbers: List[Any]) -> None:
 #     with pytest.raises(ValueError):
 #         @typeguard_ignore
-#         smooth(x=test_arr_with_nonnumbers, kind="3RS3R", twiceit=False, endrule="Tukey")
+#         smooth(
+#           x=test_arr_with_nonnumbers,
+#           kind="3RS3R",
+#           twiceit=False,
+#           endrule="Tukey"
+#         )
