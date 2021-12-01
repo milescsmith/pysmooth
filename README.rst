@@ -9,6 +9,8 @@ A Python implementation of R's stats::smooth() Tukey's (running median) smoother
 
 |pre-commit| |Black|
 
+|Repobeats analytics image|
+
 .. |PyPI| image:: https://img.shields.io/pypi/v/pysmooth.svg
    :target: https://pypi.org/project/pysmooth/
    :alt: PyPI
@@ -36,7 +38,9 @@ A Python implementation of R's stats::smooth() Tukey's (running median) smoother
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
    :alt: Black
-
+.. |Repobeats analytics image| image:: https://repobeats.axiom.co/api/embed/6870249c18b93b2fcc0d967ec9f7308d74ca42cc.svg
+   :target: https://repobeats.axiom.co
+   :alt: Repobeats analytics image
 
 Features
 --------
