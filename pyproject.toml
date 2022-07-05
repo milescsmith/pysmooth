@@ -46,7 +46,7 @@ sphinx-click = "^3.0.2"
 Pygments = "^2.10.0"
 ipython = "^7.31.1"
 isort = "^5.10.1"
-types-decorator = "^5.1.0"
+types-decorator = "^5.1.7"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

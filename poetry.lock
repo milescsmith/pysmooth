@@ -1168,7 +1168,7 @@ test = ["pytest", "typing-extensions", "mypy"]
 
 [[package]]
 name = "types-decorator"
-version = "5.1.0"
+version = "5.1.7"
 description = "Typing stubs for decorator"
 category = "dev"
 optional = false
@@ -1245,7 +1245,7 @@ tests = ["cmake", "codecov", "ninja", "pybind11", "pytest-cov", "pytest-cov", "p
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8,<=3.10"
-content-hash = "36c4f364c405cf1a68ae1a6460c82f7c3f1b3073976d86d94496574940669925"
+content-hash = "1f428b13e374fc84b94a49c8be3122ad293b79dc1471075ab0b2c29cba87e109"
 
 [metadata.files]
 alabaster = [
@@ -1889,8 +1889,8 @@ typeguard = [
     {file = "typeguard-2.13.2.tar.gz", hash = "sha256:7e50071590ab997509aa0977609eb5cf9d73d84c1f416cb4fab78b77a9d15326"},
 ]
 types-decorator = [
-    {file = "types-decorator-5.1.0.tar.gz", hash = "sha256:99abd00c614e54e75ee08d88799886acc2918cc88905eca6474ba917b327729b"},
-    {file = "types_decorator-5.1.0-py3-none-any.whl", hash = "sha256:242dcba983c9dce067b7c2d635fa11479254536d3de6056c808539040168a380"},
+    {file = "types-decorator-5.1.7.tar.gz", hash = "sha256:b2b7f47fd01ca18f89c8c0264839d92e5f79a1ecc07ace47bb900efd7cd02f59"},
+    {file = "types_decorator-5.1.7-py3-none-any.whl", hash = "sha256:5071447693a3b260750673880ab0bc8b61459705b96ecdd796db2c02bb354852"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.0.0-py3-none-any.whl", hash = "sha256:829704698b22e13ec9eaf959122315eabb370b0884400e9818334d8b677023d9"},
