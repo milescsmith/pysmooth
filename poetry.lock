@@ -249,6 +249,17 @@ toml = "*"
 pipenv = ["pipenv"]
 
 [[package]]
+name = "exceptiongroup"
+version = "1.0.0rc8"
+description = "Backport of PEP 654 (exception groups)"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+test = ["pytest (>=6)"]
+
+[[package]]
 name = "filelock"
 version = "3.4.0"
 description = "A platform independent file lock."
@@ -363,22 +374,23 @@ typing-extensions = {version = ">=3.7.4.3", markers = "python_version < \"3.10\"
 
 [[package]]
 name = "hypothesis"
-version = "6.30.1"
+version = "6.49.0"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
 attrs = ">=19.2.0"
+exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
 sortedcontainers = ">=2.1.0,<3.0.0"
 
 [package.extras]
-all = ["black (>=19.10b0)", "click (>=7.0)", "django (>=2.2)", "dpcontracts (>=0.4)", "lark-parser (>=0.6.5)", "libcst (>=0.3.16)", "numpy (>=1.9.0)", "pandas (>=0.25)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "importlib-resources (>=3.3.0)", "importlib-metadata (>=3.6)", "backports.zoneinfo (>=0.2.1)", "tzdata (>=2021.5)"]
+all = ["black (>=19.10b0)", "click (>=7.0)", "django (>=2.2)", "dpcontracts (>=0.4)", "lark-parser (>=0.6.5)", "libcst (>=0.3.16)", "numpy (>=1.9.0)", "pandas (>=0.25)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "importlib-metadata (>=3.6)", "backports.zoneinfo (>=0.2.1)", "tzdata (>=2022.1)"]
 cli = ["click (>=7.0)", "black (>=19.10b0)", "rich (>=9.0.0)"]
 codemods = ["libcst (>=0.3.16)"]
 dateutil = ["python-dateutil (>=1.4)"]
-django = ["pytz (>=2014.1)", "django (>=2.2)"]
+django = ["django (>=2.2)"]
 dpcontracts = ["dpcontracts (>=0.4)"]
 ghostwriter = ["black (>=19.10b0)"]
 lark = ["lark-parser (>=0.6.5)"]
@@ -387,7 +399,7 @@ pandas = ["pandas (>=0.25)"]
 pytest = ["pytest (>=4.6)"]
 pytz = ["pytz (>=2014.1)"]
 redis = ["redis (>=3.0.0)"]
-zoneinfo = ["importlib-resources (>=3.3.0)", "backports.zoneinfo (>=0.2.1)", "tzdata (>=2021.5)"]
+zoneinfo = ["backports.zoneinfo (>=0.2.1)", "tzdata (>=2022.1)"]
 
 [[package]]
 name = "identify"
@@ -1168,7 +1180,7 @@ test = ["pytest", "typing-extensions", "mypy"]
 
 [[package]]
 name = "types-decorator"
-version = "5.1.0"
+version = "5.1.7"
 description = "Typing stubs for decorator"
 category = "dev"
 optional = false
@@ -1224,7 +1236,7 @@ python-versions = "*"
 
 [[package]]
 name = "xdoctest"
-version = "0.15.10"
+version = "1.0.0"
 description = "A rewrite of the builtin doctest module"
 category = "dev"
 optional = false
@@ -1232,20 +1244,20 @@ python-versions = "*"
 
 [package.dependencies]
 colorama = {version = "*", optional = true, markers = "platform_system == \"Windows\" and extra == \"colors\""}
-Pygments = {version = "*", optional = true, markers = "extra == \"colors\""}
+Pygments = {version = "*", optional = true, markers = "python_version >= \"3.5.0\" and extra == \"colors\""}
 six = "*"
 
 [package.extras]
-all = ["six", "codecov", "scikit-build", "cmake", "ninja", "pybind11", "pygments", "colorama", "pytest", "pytest", "pytest-cov", "pytest", "pytest", "pytest-cov", "typing", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel", "pytest", "pytest-cov"]
-colors = ["pygments", "colorama"]
-jupyter = ["nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel"]
-optional = ["pygments", "colorama", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel"]
-tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pytest", "pytest-cov", "pytest", "pytest", "pytest-cov", "typing", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel", "pytest", "pytest-cov"]
+all = ["ipython", "ipython", "pygments", "pygments", "attrs", "cmake", "codecov", "colorama", "debugpy", "ipykernel", "ipykernel", "jedi", "jinja2", "jupyter-client", "jupyter-client", "jupyter-core", "nbconvert", "ninja", "pybind11", "pytest-cov", "pytest-cov", "pytest-cov", "pytest-cov", "pytest", "pytest", "pytest", "pytest", "pytest", "pytest", "scikit-build", "six", "typing"]
+jupyter = ["ipython", "ipython", "attrs", "debugpy", "ipykernel", "ipykernel", "jedi", "jinja2", "jupyter-client", "jupyter-client", "jupyter-core", "nbconvert"]
+optional = ["ipython", "ipython", "pygments", "pygments", "attrs", "colorama", "debugpy", "ipykernel", "ipykernel", "jedi", "jinja2", "jupyter-client", "jupyter-client", "jupyter-core", "nbconvert"]
+colors = ["pygments", "pygments", "colorama"]
+tests = ["cmake", "codecov", "ninja", "pybind11", "pytest-cov", "pytest-cov", "pytest-cov", "pytest-cov", "pytest", "pytest", "pytest", "pytest", "pytest", "pytest", "scikit-build", "typing"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8,<=3.10"
-content-hash = "9e82cc26819941b5d62e7e61a0f6ffbb8521dcb211447b355e03b521b9ec815d"
+content-hash = "f92773438e0ecaad2b346e03e85d90395b044050b030a02d2ae99273eb60ad2b"
 
 [metadata.files]
 alabaster = [
@@ -1385,6 +1397,10 @@ dparse = [
     {file = "dparse-0.5.1-py3-none-any.whl", hash = "sha256:e953a25e44ebb60a5c6efc2add4420c177f1d8404509da88da9729202f306994"},
     {file = "dparse-0.5.1.tar.gz", hash = "sha256:a1b5f169102e1c894f9a7d5ccf6f9402a836a5d24be80a986c7ce9eaed78f367"},
 ]
+exceptiongroup = [
+    {file = "exceptiongroup-1.0.0rc8-py3-none-any.whl", hash = "sha256:ab0a968e1ef769e55d9a596f4a89f7be9ffedbc9fdefdb77cc68cf5c33ce1035"},
+    {file = "exceptiongroup-1.0.0rc8.tar.gz", hash = "sha256:6990c24f06b8d33c8065cfe43e5e8a4bfa384e0358be036af9cc60b6321bd11a"},
+]
 filelock = [
     {file = "filelock-3.4.0-py3-none-any.whl", hash = "sha256:2e139a228bcf56dd8b2274a65174d005c4a6b68540ee0bdbb92c76f43f29f7e8"},
     {file = "filelock-3.4.0.tar.gz", hash = "sha256:93d512b32a23baf4cac44ffd72ccf70732aeff7b8050fcaf6d3ec406d954baf4"},
@@ -1421,8 +1437,8 @@ gitpython = [
     {file = "GitPython-3.1.24.tar.gz", hash = "sha256:df83fdf5e684fef7c6ee2c02fc68a5ceb7e7e759d08b694088d0cacb4eba59e5"},
 ]
 hypothesis = [
-    {file = "hypothesis-6.30.1-py3-none-any.whl", hash = "sha256:adb42a52bc3c1300d0a0a221870ce5c264bee2e54b0473de6767c3ae02649b5f"},
-    {file = "hypothesis-6.30.1.tar.gz", hash = "sha256:25e0e581f999281ff765aba3c3f1e3ce289e82a1ff1b9de2c5082b37113aa448"},
+    {file = "hypothesis-6.49.0-py3-none-any.whl", hash = "sha256:86189afbb3570ed7b567388aedf974b779895c3054bb12ef89d7e099850789f9"},
+    {file = "hypothesis-6.49.0.tar.gz", hash = "sha256:2d048f8551a1736cb4d3e21a741bb4e6e6e671a8d324647abc3d768ec2fca845"},
 ]
 identify = [
     {file = "identify-2.4.0-py2.py3-none-any.whl", hash = "sha256:eba31ca80258de6bb51453084bff4a923187cd2193b9c13710f2516ab30732cc"},
@@ -1889,8 +1905,8 @@ typeguard = [
     {file = "typeguard-2.13.2.tar.gz", hash = "sha256:7e50071590ab997509aa0977609eb5cf9d73d84c1f416cb4fab78b77a9d15326"},
 ]
 types-decorator = [
-    {file = "types-decorator-5.1.0.tar.gz", hash = "sha256:99abd00c614e54e75ee08d88799886acc2918cc88905eca6474ba917b327729b"},
-    {file = "types_decorator-5.1.0-py3-none-any.whl", hash = "sha256:242dcba983c9dce067b7c2d635fa11479254536d3de6056c808539040168a380"},
+    {file = "types-decorator-5.1.7.tar.gz", hash = "sha256:b2b7f47fd01ca18f89c8c0264839d92e5f79a1ecc07ace47bb900efd7cd02f59"},
+    {file = "types_decorator-5.1.7-py3-none-any.whl", hash = "sha256:5071447693a3b260750673880ab0bc8b61459705b96ecdd796db2c02bb354852"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.0.0-py3-none-any.whl", hash = "sha256:829704698b22e13ec9eaf959122315eabb370b0884400e9818334d8b677023d9"},
@@ -1909,6 +1925,7 @@ wcwidth = [
     {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
 ]
 xdoctest = [
-    {file = "xdoctest-0.15.10-py3-none-any.whl", hash = "sha256:7666bd0511df59275dfe94ef94b0fde9654afd14f00bf88902fdc9bcee77d527"},
-    {file = "xdoctest-0.15.10.tar.gz", hash = "sha256:5f16438f2b203860e75ec594dbc38020df7524db0b41bb88467ea0a6030e6685"},
+    {file = "xdoctest-1.0.0-py2-none-any.whl", hash = "sha256:0b0b5958e0ac0a28c5496f96b7f0adbeb0ea7e0c0a227de1ce3bc79ddb1a4f00"},
+    {file = "xdoctest-1.0.0-py3-none-any.whl", hash = "sha256:76f44dc74515ff4bdf3cc3e91a2e408cf5699cfa03367634efaadf138c7b132d"},
+    {file = "xdoctest-1.0.0.tar.gz", hash = "sha256:7ebba7e71457e6e7cf86c463699575e52b1c9cc32ee2ee5e72256d6cd3aaeb2d"},
 ]
