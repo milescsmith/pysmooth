@@ -17,7 +17,7 @@ Changelog = "https://github.com/milescsmith/pysmooth/releases"
 
 [tool.poetry.dependencies]
 python = "^3.8,<=3.10"
-numpy = "^1.20.3"
+numpy = "^1.22"
 
 [tool.poetry.dev-dependencies]
 hypothesis = "^6.49.0"
