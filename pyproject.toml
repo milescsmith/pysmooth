@@ -22,7 +22,7 @@ numpy = "^1.22"
 [tool.poetry.dev-dependencies]
 hypothesis = "^6.49.0"
 nox-poetry = "^1.0.1"
-pytest = "^7.1.2"
+pytest = "^7.4.3"
 coverage = {extras = ["toml"], version = "^6.4"}
 safety = "^1.10.3"
 mypy = "^0.931"
