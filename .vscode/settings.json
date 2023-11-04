@@ -1,8 +1,0 @@
-{
-  "python.linting.pylintEnabled": false,
-  "python.linting.mypyEnabled": true,
-  "python.linting.enabled": true,
-  "restructuredtext.confPath": "${workspaceFolder}/docs",
-  "restructuredtext.languageServer.disabled": true,
-  "esbonio.sphinx.confDir": "${workspaceFolder}/docs"
-}
