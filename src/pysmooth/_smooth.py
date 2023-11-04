@@ -5,10 +5,19 @@ in R 4.1.2.  A copy of the original code can be found at
 https://github.com/wch/r-source/blob/trunk/src/library/stats/src/smooth.c
 
 """
+from enum import Enum
 from statistics import median
-from typing import List, Tuple
 
 
+class EndRule(int, Enum):
+    sm_no_endrule = 0
+    sm_copy_endrule = 1
+    sm_tukey_endrule = 2
+
+
+N_CUTOFF = 2
+
+# TODO: reimplement this in rust
 def med3(u: float, v: float, w: float) -> float:
     """Find the median of three numbers.
 
@@ -52,12 +61,12 @@ def imed3(u: float, v: float, w: float) -> int:
 
 
 def sm_3(
-    x: List[float], y: List[float], n: int, end_rule: int
-) -> Tuple[bool, List[float], List[float]]:
+    x: list[float], y: list[float], n: int, end_rule: int
+) -> tuple[bool, list[float], list[float]]:
 
     chg = False
 
-    if n <= 2:
+    if n <= N_CUTOFF:
         for i in range(n):
             y[i] = x[i]
         return False, x, y
@@ -73,35 +82,36 @@ def sm_3(
 
 
 def sm_do_endrule(
-    y: List[float],
-    x: List[float],
+    y: list[float],
+    x: list[float],
     n: int,
-    chg: bool,
+    chg: bool, # noqa FBT001
     end_rule: int,
-) -> Tuple[bool, List[float], List[float]]:
-    if end_rule == 0:  # "sm_NO_ENDRULE"
+) -> tuple[bool, list[float], list[float]]:
+    if end_rule == EndRule.sm_no_endrule:
         pass
-    elif end_rule == 1:  # "sm_COPY_ENDRULE"
+    elif end_rule == EndRule.sm_copy_endrule:
         y[0] = x[0]
         y[n - 1] = x[n - 1]
-    elif end_rule == 2:  # "sm_TUKEY_ENDRULE"
+    elif end_rule == EndRule.sm_tukey_endrule:
         y[0] = median([3 * y[1] - 2 * y[2], x[0], y[1]])
         chg = chg or (y[0] != x[0])
         y[n - 1] = median([y[n - 2], x[n - 1], 3 * y[n - 2] - 2 * y[n - 3]])
         chg = chg or (y[n - 1] != x[n - 1])
     else:
-        raise RuntimeError(f"invalid end-rule for running median of 3: {end_rule}")
+        msg = f"invalid end-rule for running median of 3: {end_rule}"
+        raise RuntimeError(msg)
 
     return chg, y, x
 
 
-def sm_3R(
-    x: List[float],
-    y: List[float],
-    z: List[float],
+def sm_3R( # noqa N802
+    x: list[float],
+    y: list[float],
+    z: list[float],
     n: int,
     end_rule: int,
-) -> Tuple[int, List[float], List[float], List[float]]:
+) -> tuple[int, list[float], list[float], list[float]]:
 
     chg, x, y = sm_3(x, y, n, 1)  # "sm_COPY_ENDRULE"
     it = int(chg)
@@ -122,7 +132,7 @@ def sm_3R(
         return int(chg), x, y, z
 
 
-def sptest(x: List[float], i: int) -> bool:
+def sptest(x: list[float], i: int) -> bool:
     if x[i] != x[i + 1]:
         return False
     elif (x[i - 1] <= x[i] and x[i + 1] <= x[i + 2]) or (
@@ -134,8 +144,8 @@ def sptest(x: List[float], i: int) -> bool:
 
 
 def sm_split3(
-    x: List[float], y: List[float], n: int, do_ends: bool
-) -> Tuple[bool, List[float], List[float]]:
+    x: list[float], y: list[float], n: int, do_ends: bool # noqa FBT001
+) -> tuple[bool, list[float], list[float]]:
 
     # y[] := S(x[])  where S() = "sm_split3"
     chg = False
@@ -177,15 +187,15 @@ def sm_split3(
     return chg, x, y
 
 
-def sm_3RS3R(
-    x: List[float],
-    y: List[float],
-    z: List[float],
-    w: List[float],
+def sm_3RS3R( # noqa N802
+    x: list[float],
+    y: list[float],
+    z: list[float],
+    w: list[float],
     n: int,
     end_rule: int,
-    split_ends: bool,
-) -> Tuple[int, List[float], List[float], List[float], List[float]]:
+    split_ends: bool, # noqa FBT001
+) -> tuple[int, list[float], list[float], list[float], list[float]]:
     # y[1:n] := "3R S 3R"(x[1:n]);  z = "work";
 
     it, x, y, z = sm_3R(x, y, z, n, end_rule)
@@ -202,14 +212,14 @@ def sm_3RS3R(
     return (it + chg), x, y, z, w
 
 
-def sm_3RSS(
-    x: List[float],
-    y: List[float],
-    z: List[float],
+def sm_3RSS( # noqa 802
+    x: list[float],
+    y: list[float],
+    z: list[float],
     n: int,
     end_rule: int,
-    split_ends: bool,
-) -> Tuple[int, List[float], List[float], List[float]]:
+    split_ends: bool, # noqa FBT001
+) -> tuple[int, list[float], list[float], list[float]]:
     # y[1:n] := "3RSS"(x[1:n]);  z = "work"
 
     it, x, y, z = sm_3R(x, y, z, n, end_rule)
@@ -220,15 +230,15 @@ def sm_3RSS(
     return (it + int(chg)), x, y, z
 
 
-def sm_3RSR(
-    x: List[float],
-    y: List[float],
-    z: List[float],
-    w: List[float],
+def sm_3RSR( # noqa 802
+    x: list[float],
+    y: list[float],
+    z: list[float],
+    w: list[float],
     n: int,
     end_rule: int,
-    split_ends: bool,
-) -> Tuple[int, List[float], List[float], List[float], List[float]]:
+    split_ends: bool, # noqa FBT001
+) -> tuple[int, list[float], list[float], list[float], list[float]]:
 
     # y[1:n] := "3RSR"(x[1:n]);  z := residuals; w = "work";
 
