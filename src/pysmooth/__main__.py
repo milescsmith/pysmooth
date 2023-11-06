@@ -63,15 +63,15 @@ def smooth(
     if kind.startswith("3RS") and not do_ends:
         iend = -iend
     elif kind == "S":
-        iend = int(bool(do_ends))
+        iend = int(do_ends)
 
     n: int = len(x)
     y: list[float] = np.zeros(n, dtype=np.float64).tolist()
-    split_ends = True if iend < 0 else False
-
     if kind != "S":
         z: list[float] = np.zeros(n, dtype=np.float64).tolist()
         w: list[float] = np.zeros(n, dtype=np.float64).tolist()
+        split_ends = iend < 0
+
         if kind == "3RS3R":
             _, x, y, z, w = sm_3RS3R(x, y, z, w, n, abs(iend), split_ends)
         elif kind == "3RSS":

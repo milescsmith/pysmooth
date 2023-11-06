@@ -31,9 +31,9 @@ def med3(u: float, v: float, w: float) -> float:
     float
         median of u, v, w
     """
-    if (u <= v and v <= w) or (u >= v and v >= w):
+    if u <= v <= w or u >= v >= w:
         return v
-    elif (u <= w and w <= v) or (u >= w and w >= v):
+    elif u <= w <= v or u >= w >= v:
         return w
     else:
         return u
@@ -52,9 +52,9 @@ def imed3(u: float, v: float, w: float) -> int:
     int
         -1 if u, 0 if v, or 1 if w is the median
     """
-    if (u <= v and v <= w) or (u >= v and v >= w):
+    if u <= v <= w or u >= v >= w:
         return 0
-    elif (u <= w and w <= v) or (u >= w and w >= v):
+    elif u <= w <= v or u >= w >= v:
         return 1
     else:
         return -1
@@ -126,10 +126,7 @@ def sm_3R( # noqa N802
     if n > 2:
         chg, y, x = sm_do_endrule(y, x, n, chg, end_rule)
 
-    if it:
-        return it, x, y, z
-    else:
-        return int(chg), x, y, z
+    return (it, x, y, z) if it else (int(chg), x, y, z)
 
 
 def sptest(x: list[float], i: int) -> bool:
@@ -167,18 +164,14 @@ def sm_split3(
         if sptest(x, i):
             # plateau at x[i] == x[i+1]
             # at left :
-            if -1 < (j := imed3(x[i], x[i - 1], 3 * x[i - 1] - 2 * x[i - 2])):
-                if j == 0:
-                    y[i] = x[i - 1]
-                else:
-                    y[i] = 3 * x[i - 1] - 2 * x[i - 2]
+            if (j := imed3(x[i], x[i - 1], 3 * x[i - 1] - 2 * x[i - 2])) > -1:
+                y[i] = x[i - 1] if j == 0 else 3 * x[i - 1] - 2 * x[i - 2]
                 chg = y[i] != x[i]
             # at right :
-            if -1 < (j := imed3(x[i + 1], x[i + 2], 3 * x[i + 2] - 2 * x[i + 3])):
-                if j == 0:
-                    y[i + 1] = x[i + 2]
-                else:
-                    y[i + 1] = 3 * x[i + 2] - 2 * x[i + 3]
+            if (
+                j := imed3(x[i + 1], x[i + 2], 3 * x[i + 2] - 2 * x[i + 3])
+            ) > -1:
+                y[i + 1] = x[i + 2] if j == 0 else 3 * x[i + 2] - 2 * x[i + 3]
                 chg = y[i + 1] != x[i + 1]
     if do_ends and sptest(x, n - 3):
         chg = True
@@ -246,7 +239,7 @@ def sm_3RSR( # noqa 802
 
     it, x, y, z = sm_3R(x, y, z, n, end_rule)
     chg: bool = True
-    while chg is True:
+    while chg:
         it += 1
         chg, y, z = sm_split3(y, z, n, split_ends)
         ch2, z, y, w = sm_3R(z, y, w, n, end_rule)
