@@ -24,7 +24,7 @@ hypothesis = "^6.88"
 nox-poetry = "^1.0.3"
 pytest = "^7.4.3"
 coverage = {extras = ["toml"], version = "^7.3"}
-safety = "^2.3.5"
+safety = ">=2.3.5,<4.0.0"
 mypy = "^1.6"
 typeguard = "^4.1"
 xdoctest = {extras = ["colors"], version = "^1.1"}
