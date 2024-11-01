@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-$ [1.4.1]
+# [1.5.0]
+
+## Changed
+
+- Relaxed the target Python versions to allow versions above 3.10
+- Relaxed the target numpy version to allow versions above 1.26
+- Updated dependencies
+- Switched from poetry to pdm
+    - revised the noxfile accordingly
+
+
+# [1.4.1]
 
 ## Changed
 

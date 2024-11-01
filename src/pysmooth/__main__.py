@@ -1,4 +1,5 @@
 """Command-line interface."""
+
 import numpy as np
 
 from pysmooth._smooth import sm_3, sm_3R, sm_3RS3R, sm_3RSR, sm_3RSS, sm_split3
@@ -7,9 +8,9 @@ from pysmooth._smooth import sm_3, sm_3R, sm_3RS3R, sm_3RSR, sm_3RSS, sm_split3
 def smooth(
     x: list[float],
     kind: str = "3RS3R",
-    twiceit: bool = False, # noqa FBT001
+    twiceit: bool = False,
     endrule: str = "Tukey",
-    do_ends: bool = False, # noqa FBT001
+    do_ends: bool = False,
 ) -> list[float]:
     """Tukey's smoothers, translated from the `smooth` function found in the R module {stats}.
 
@@ -50,10 +51,7 @@ def smooth(
         raise RuntimeError(msg)
 
     if any(np.isnan(np.array(x, dtype=np.float64))):
-        msg = (
-            "The sequence to be smoothed contains NAs/nans. This algorithm "
-            "is unable to accomodate NAs."
-        )
+        msg = "The sequence to be smoothed contains NAs/nans. This algorithm " "is unable to accomodate NAs."
         raise ValueError(msg)
 
     if not all(np.issubdtype(type(_), np.number) for _ in x):
@@ -87,9 +85,7 @@ def smooth(
         _, x, y = sm_split3(x, y, n, bool(iend))
 
     if twiceit:
-        r: list[float] = smooth(
-            x=y, kind=kind, twiceit=False, endrule=endrule, do_ends=do_ends
-        )
+        r: list[float] = smooth(x=y, kind=kind, twiceit=False, endrule=endrule, do_ends=do_ends)
         y += r
 
     return y

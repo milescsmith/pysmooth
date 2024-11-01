@@ -1,44 +1,29 @@
-[tool.poetry]
+[project]
+authors = [
+    {name = "Miles Smith", email = "mileschristiansmith@gmail.com"},
+]
+license = {text = "GPL-3.0"}
+requires-python = "<4.0,>=3.10"
+dependencies = [
+    "numpy>=1.26",
+]
 name = "pysmooth"
-version = "1.4.1"
+version = "1.5.0"
 description = "Pysmooth: a Python implementation of R's stats::smooth Tukey's (running median) smoother"
-authors = ["Miles Smith <mileschristiansmith@gmail.com>"]
-license = "GPL-3.0"
 readme = "README.rst"
-homepage = "https://github.com/milescsmith/pysmooth"
-repository = "https://github.com/milescsmith/pysmooth"
-documentation = "https://pysmooth.readthedocs.io"
 classifiers = [
     "Development Status :: 4 - Beta",
 ]
 
-[tool.poetry.urls]
+[project.urls]
 Changelog = "https://github.com/milescsmith/pysmooth/releases"
+homepage = "https://github.com/milescsmith/pysmooth"
+repository = "https://github.com/milescsmith/pysmooth"
+documentation = "https://pysmooth.readthedocs.io"
 
-[tool.poetry.dependencies]
-python = "^3.9,<3.11"
-numpy = "^1.26"
-
-[tool.poetry.group.dev.dependencies]
-hypothesis = "^6.88"
-nox-poetry = "^1.0.3"
-pytest = "^7.4.3"
-coverage = {extras = ["toml"], version = "^7.3"}
-safety = "^2.3.5"
-mypy = "^1.6"
-typeguard = "^4.1"
-xdoctest = {extras = ["colors"], version = "^1.1"}
-sphinx = "^7.2"
-sphinx-autobuild = "^2021.3.14"
-pre-commit = "^3.5"
-black = "^23"
-pre-commit-hooks = "^4.5"
-sphinx-rtd-theme = "^1.3.0"
-sphinx-click = "^5.0"
-Pygments = "^2.16"
-ipython = "^8.17.2"
-ruff = "^0.1.3"
-
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
 
@@ -50,95 +35,25 @@ source = ["pysmooth"]
 show_missing = true
 fail_under = 100
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.isort]
-known_typing = "typing,types,typing_extensions,mypy,mypy_extensions"
-sections = "FUTURE,TYPING,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
-include_trailing_comma = true
-default_section = "FIRSTPARTY"
-multi_line_output = 3
-indent = 4
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 80
-
-[tool.black]
-line-length = 120
-target-version = ["py309"]
-skip-string-normalization = true
-
-[tool.ruff]
-target-version = "py309"
-line-length = 120
-select = [
-    "A",
-    "ARG",
-    "B",
-    "C",
-    "DTZ",
-    "E",
-    "EM",
-    "F",
-    "FBT",
-    "I",
-    "I001",
-    "ICN",
-    "ISC",
-    "N",
-    "PLC",
-    "PLE",
-    "PLR",
-    "PLW",
-    "Q",
-    "RUF",
-    "S",
-    "T",
-    "TID",
-    "UP",
-    "W",
-    "YTT",
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "hypothesis>=6.116.0",
+    "pytest>=8.3.3",
+    "coverage[toml]>=7.6.4",
+    "pytest-random-order>=1.1.1",
+    "pytest-xdist[psutil]>=3.6.1",
+    "typeguard>=4.4.0",
+    "pre-commit>=4.0.1",
+    "pre-commit-hooks>=5.0.0",
+    "ruff>=0.7.2",
+    "sphinx-rtd-theme>=3.0.1",
+    "Pygments>=2.18.0",
+    "xdoctest[colors]>=1.2.0",
+    "sphinx>=8.1.3",
+    "sphinx-autobuild>=2024.10.3",
+    "nox>=2024.10.9",
 ]
-ignore = [
-    "B027",
-    "FBT003",
-    "S105",
-    "S106",
-    "S107",
-    "C901",
-    "PLR0911",
-    "PLR0912",
-    "PLR0913",
-    "PLR0915",
-]
-unfixable = [
-    "F401",
-    "UP007",
-]
-exclude = [
-    ".git",
-    ".hg",
-    "__pycache__",
-    "_bin/*",
-    "_build/*",
-    "_ig_fbcode_wheel/*",
-    "buck-out/*",
-    "third-party-buck/*",
-    "third-party2/*",
-    "dist",
-    ".venv",
-    ".nox",
-    ".mypy_cache",
-    ".pytype",
-    ".svn",
-    "__pypackages__",
-]
-src = ["src"]
 
-[tool.ruff.mccabe]
-max-complexity = 50
-
-[tool.ruff.flake8-tidy-imports]
-ban-relative-imports = "all"
+[tool.pdm.build]
+includes = []

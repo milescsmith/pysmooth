@@ -5,6 +5,7 @@ in R 4.1.2.  A copy of the original code can be found at
 https://github.com/wch/r-source/blob/trunk/src/library/stats/src/smooth.c
 
 """
+
 from enum import Enum
 from statistics import median
 
@@ -16,6 +17,7 @@ class EndRule(int, Enum):
 
 
 N_CUTOFF = 2
+
 
 # TODO: reimplement this in rust
 def med3(u: float, v: float, w: float) -> float:
@@ -60,10 +62,7 @@ def imed3(u: float, v: float, w: float) -> int:
         return -1
 
 
-def sm_3(
-    x: list[float], y: list[float], n: int, end_rule: int
-) -> tuple[bool, list[float], list[float]]:
-
+def sm_3(x: list[float], y: list[float], n: int, end_rule: int) -> tuple[bool, list[float], list[float]]:
     chg = False
 
     if n <= N_CUTOFF:
@@ -85,7 +84,7 @@ def sm_do_endrule(
     y: list[float],
     x: list[float],
     n: int,
-    chg: bool, # noqa FBT001
+    chg: bool,
     end_rule: int,
 ) -> tuple[bool, list[float], list[float]]:
     if end_rule == EndRule.sm_no_endrule:
@@ -105,14 +104,13 @@ def sm_do_endrule(
     return chg, y, x
 
 
-def sm_3R( # noqa N802
+def sm_3R(
     x: list[float],
     y: list[float],
     z: list[float],
     n: int,
     end_rule: int,
 ) -> tuple[int, list[float], list[float], list[float]]:
-
     chg, x, y = sm_3(x, y, n, 1)  # "sm_COPY_ENDRULE"
     it = int(chg)
 
@@ -132,18 +130,13 @@ def sm_3R( # noqa N802
 def sptest(x: list[float], i: int) -> bool:
     if x[i] != x[i + 1]:
         return False
-    elif (x[i - 1] <= x[i] and x[i + 1] <= x[i + 2]) or (
-        x[i - 1] >= x[i] and x[i + 1] >= x[i + 2]
-    ):
+    elif (x[i - 1] <= x[i] and x[i + 1] <= x[i + 2]) or (x[i - 1] >= x[i] and x[i + 1] >= x[i + 2]):
         return False
     else:
         return True
 
 
-def sm_split3(
-    x: list[float], y: list[float], n: int, do_ends: bool # noqa FBT001
-) -> tuple[bool, list[float], list[float]]:
-
+def sm_split3(x: list[float], y: list[float], n: int, do_ends: bool) -> tuple[bool, list[float], list[float]]:
     # y[] := S(x[])  where S() = "sm_split3"
     chg = False
 
@@ -168,9 +161,7 @@ def sm_split3(
                 y[i] = x[i - 1] if j == 0 else 3 * x[i - 1] - 2 * x[i - 2]
                 chg = y[i] != x[i]
             # at right :
-            if (
-                j := imed3(x[i + 1], x[i + 2], 3 * x[i + 2] - 2 * x[i + 3])
-            ) > -1:
+            if (j := imed3(x[i + 1], x[i + 2], 3 * x[i + 2] - 2 * x[i + 3])) > -1:
                 y[i + 1] = x[i + 2] if j == 0 else 3 * x[i + 2] - 2 * x[i + 3]
                 chg = y[i + 1] != x[i + 1]
     if do_ends and sptest(x, n - 3):
@@ -180,14 +171,14 @@ def sm_split3(
     return chg, x, y
 
 
-def sm_3RS3R( # noqa N802
+def sm_3RS3R(
     x: list[float],
     y: list[float],
     z: list[float],
     w: list[float],
     n: int,
     end_rule: int,
-    split_ends: bool, # noqa FBT001
+    split_ends: bool,
 ) -> tuple[int, list[float], list[float], list[float], list[float]]:
     # y[1:n] := "3R S 3R"(x[1:n]);  z = "work";
 
@@ -205,13 +196,13 @@ def sm_3RS3R( # noqa N802
     return (it + chg), x, y, z, w
 
 
-def sm_3RSS( # noqa 802
+def sm_3RSS(
     x: list[float],
     y: list[float],
     z: list[float],
     n: int,
     end_rule: int,
-    split_ends: bool, # noqa FBT001
+    split_ends: bool,
 ) -> tuple[int, list[float], list[float], list[float]]:
     # y[1:n] := "3RSS"(x[1:n]);  z = "work"
 
@@ -223,16 +214,15 @@ def sm_3RSS( # noqa 802
     return (it + int(chg)), x, y, z
 
 
-def sm_3RSR( # noqa 802
+def sm_3RSR(
     x: list[float],
     y: list[float],
     z: list[float],
     w: list[float],
     n: int,
     end_rule: int,
-    split_ends: bool, # noqa FBT001
+    split_ends: bool,
 ) -> tuple[int, list[float], list[float], list[float], list[float]]:
-
     # y[1:n] := "3RSR"(x[1:n]);  z := residuals; w = "work";
 
     # == "SR" (as follows) is stupid ! (MM) ==
